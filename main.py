@@ -1,7 +1,7 @@
 import turtle
 import time
 import random
-
+from ball import Ball
 ## Screen size
 turtle.setup(width=800, height=600)
 
@@ -40,7 +40,7 @@ window.listen()
 
 ## Game elements
 paddle = turtle.Turtle()
-ball = turtle.Turtle()
+ball = Ball()
 
 
 
@@ -57,30 +57,47 @@ paddle.goto(x=0, y=-250)
 
 
 ## Ball Structure
-ball.color('white')
-ball.shape('circle')
-ball.shapesize(stretch_len=0.9)
-for i in range(50):
-    time.sleep(0.1)
-    def move_ball():
-        y = ball.ycor() + -10
-        x = ball.xcor()
-        ball.goto(x,y)
 
-    move_ball()
+
 
 
 ## Brick Structure
 num_turtle = 20
-turtles = []
-for _ in range(num_turtle):
-    new_turtle = turtle.Turtle()
-    new_turtle.penup()
-    new_turtle.shape('square')
-    new_turtle.shapesize(stretch_wid=0.4,stretch_len=1)
-    new_turtle.color('white')
-    new_turtle.goto(get_random_postion())
-    turtles.append(new_turtle)
+# turtles = []
+# for _ in range(num_turtle):
+#     new_turtle = turtle.Turtle()
+#     new_turtle.penup()
+#     new_turtle.shape('square')
+#     new_turtle.shapesize(stretch_wid=0.4,stretch_len=1)
+#     new_turtle.color('white')
+#     new_turtle.goto(get_random_postion())
+#     turtles.append(new_turtle)
+
+
+IS_GAME_ON = True
+
+## Collison Detection 
+## Detect collison with paddle
+while IS_GAME_ON:
+    time.sleep(0.1)
+    ball.move()
+    if ball.ycor() > 280:
+        ball.bounce()
+    if ball.xcor() > 380 or ball.xcor() < -380:
+        ball.bounce_x()
+    if ball.distance(paddle) < 50:
+        ball.bounce_ball()
+    if ball.ycor() < -300:
+        print('Game Over')
+
+
+
+
+
+    
+
+
+
 
 
 
@@ -88,3 +105,4 @@ for _ in range(num_turtle):
 
 
 window.mainloop()
+
