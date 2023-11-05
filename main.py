@@ -2,14 +2,17 @@ import turtle
 import time
 import random
 from ball import Ball
+import tkinter as tk
+from tkinter import messagebox
+import sys
 ## Screen size
 turtle.setup(width=800, height=600)
 
 
 ## Get random postion for bricks within 250 hundard in y axis
 def get_random_postion():
-    x = random.randint(0,300)
-    y = random.randint(0,250)
+    x = random.randint(-300,300)
+    y = random.randint(0,220)
     return x,y
 
 
@@ -63,18 +66,25 @@ paddle.goto(x=0, y=-250)
 
 ## Brick Structure
 num_turtle = 20
-# turtles = []
-# for _ in range(num_turtle):
-#     new_turtle = turtle.Turtle()
-#     new_turtle.penup()
-#     new_turtle.shape('square')
-#     new_turtle.shapesize(stretch_wid=0.4,stretch_len=1)
-#     new_turtle.color('white')
-#     new_turtle.goto(get_random_postion())
-#     turtles.append(new_turtle)
-
+turtles = []
+for _ in range(num_turtle):
+    new_turtle = turtle.Turtle()
+    new_turtle.penup()
+    new_turtle.shape('square')
+    new_turtle.shapesize(stretch_wid=0.4,stretch_len=1)
+    new_turtle.color('white')
+    new_turtle.goto(get_random_postion())
+    turtles.append(new_turtle)
 
 IS_GAME_ON = True
+SCORE = 0
+
+## Show popup window
+def score_popup():
+    root = tk.Tk()
+    root.withdraw()
+    messagebox.showinfo("Popup Window", f"Your Score : {SCORE}")
+    root.destroy()
 
 ## Collison Detection 
 ## Detect collison with paddle
@@ -88,7 +98,17 @@ while IS_GAME_ON:
     if ball.distance(paddle) < 50:
         ball.bounce_ball()
     if ball.ycor() < -300:
-        print('Game Over')
+        IS_GAME_ON = False
+        score_popup()
+        sys.exit()
+
+    
+    ## Detecting collison with bricks
+    for turtle in turtles:
+        if ball.distance(turtle) < 30:
+            SCORE += 1
+            turtle.hideturtle()
+
 
 
 

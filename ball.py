@@ -18,7 +18,7 @@ class Ball(Turtle):
     def bounce_ball(self):
         self.y_move *= -1
     def move(self):
-        x = self.xcor() + self.x_move
+        x = self.xcor() - self.x_move
         y = self.ycor() + self.y_move
         self.goto(x, y)
     def reset_position(self):
