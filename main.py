@@ -5,6 +5,7 @@ from ball import Ball
 import tkinter as tk
 from tkinter import messagebox
 import sys
+from paddle import PADDLE
 ## Screen size
 turtle.setup(width=800, height=600)
 
@@ -16,7 +17,9 @@ def get_random_postion():
     return x,y
 
 
-
+## Game elements
+paddle = PADDLE()
+ball = Ball()
 
 
 ## Turtle window
@@ -25,15 +28,12 @@ window.title("BreakoutBlast: Brick Buster Challenge")
 window.bgcolor('black')
 
 ## Keyboard interaction
-def move_forward():
-    paddle.forward(10)
-def move_back():
-    paddle.backward(10)
+
 
 
 ## User interaction using keyboard
-window.onkey(move_forward, 'd')
-window.onkey(move_back, 'a')
+window.onkey(paddle.move_forward, 'd')
+window.onkey(paddle.move_back, 'a')
 
 
 ## Listen for keystrokes
@@ -41,9 +41,7 @@ window.listen()
 
 
 
-## Game elements
-paddle = turtle.Turtle()
-ball = Ball()
+
 
 
 
@@ -51,11 +49,7 @@ ball = Ball()
 
 
 ## Paddle Structure
-paddle.color('white')
-paddle.penup()
-paddle.shape('square')
-paddle.shapesize(stretch_wid=0.2, stretch_len=3.2)
-paddle.goto(x=0, y=-250)
+
 
 
 
